@@ -8,8 +8,8 @@ class CreateRatings < ActiveRecord::Migration
       t.integer    :punctuality
       t.integer    :clarity
       t.integer    :competence
-      t.belongs_to :teachers
-      t.belongs_to :students
+      t.belongs_to :teacher
+      t.belongs_to :student
 
       t.timestamps
     end
