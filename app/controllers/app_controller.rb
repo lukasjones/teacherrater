@@ -1,61 +1,69 @@
+require_relative "../views/app_view"
+
 module Controller
   def self.run!
-    puts "Options:"
-    puts "Rate or view average"
+    View.menu
+    menu_input = View.get_numerical_input(1..3)
+    rate_or_options_choice(menu_input)
+    #rate_or_options_choice # branch to rate teacher or get teacher average
 
-    rate_or_options_choice # branch to rate teacher or get teacher average
+    print "\e[2J"
+    print "\e[H"
+    self.run!
   end
 
-  def self.rate_or_options_choice
-    case gets.chomp.downcase
-    when "rate"
+  def self.rate_or_options_choice(menu_input)
+    case menu_input
+    when 1
       rate
-    when "view average"
+    when 2
       view_average
+    when 3
+      exit
     end
   end
 
-
+  def self.pick_teacher
+    View.ask_teacher_name
+    teachers = ["Rock", "Mashmellow", "Sunny", "Gatherer"]
+    View.display_teachers(teachers)
+    View.get_text_input
+  end
 
 
 # ------------------------------RATE------------------------------------
   def self.rate
-    puts "What's your name?"
-    student_name = gets.chomp
-    # Student.create(name: student_name)
-    puts "Ok #{student_name} what teacher would you like to rate?"
-    puts "Rock | Mashmellow | Sunny | Gatherer"
-    teacher_name = gets.chomp.downcase
-    # teacher_to_rate = Teacher.where(name: teacher_name)
+    View.ask_student_name
+    student_name = View.get_text_input
 
-    # prompt for which teacher you are rating
-    # teacher_rating_hash = View.ask_questions_and_get_input_in_hash
+    teacher_name = pick_teacher
+
+    teacher_rating_hash = View.get_ratings
     # current_teacher = Teacher.new(teacher_rating_hash)
     # answer = View.ask_if_they_want_to_submit(current_teacher)
 
-    puts "questions"
-    gets.chomp
-    puts "Submit: y/n "
-    answer = gets.chomp.downcase
+    answer = View.ask_are_you_sure
     case answer #  is this necessary?
     when 'y'
-      puts "submitted"
-      # current_teacher.save
+      # student = Student.find_or_create_by(name: student_name)
+      # teacher_to_rate = Teacher.find_by(name: teacher_name)
+      # rating = Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
+      View.confirm_submission
     when 'n'
-      puts "not submitted"
-      # prompt user for what they want to do then.
+      View.deconfirm_submission
     end
+    sleep(2)
+
     # give user funny input based off scores of teacher.
 
   end
 
 
 
+
 # ---------------------------VIEW AVERAGE---------------------------------
   def self.view_average
-    puts "Select a teacher."
-    puts "Rock | Mashmellow | Sunny | Gatherer" #teachers from Teacher class
-    teacher = gets.chomp
+    teacher_name = pick_teacher
 
 
 
