@@ -34,11 +34,15 @@ module Controller
     # answer = View.ask_if_they_want_to_submit(current_teacher)
 
     puts "questions"
-    answer = gets.chomp
+    gets.chomp
+    puts "Submit: y/n "
+    answer = gets.chomp.downcase
     case answer #  is this necessary?
-    when true
+    when 'y'
+      puts "submitted"
       # current_teacher.save
-    when false
+    when 'n'
+      puts "not submitted"
       # prompt user for what they want to do then.
     end
     # give user funny input based off scores of teacher.
@@ -50,16 +54,24 @@ module Controller
 # ---------------------------VIEW AVERAGE---------------------------------
   def self.view_average
     puts "Select a teacher."
-    puts "Rock | Mashmellow | Sunny | Gatherer"
+    puts "Rock | Mashmellow | Sunny | Gatherer" #teachers from Teacher class
     teacher = gets.chomp
 
-    #ratings = Rating.where(teacher_id: teacher.id)
-    humor = 0
-    cleanliness = 0
-    punctuality = 0
-    clarity = 0
-    competence = 0
 
+
+
+
+
+
+
+
+    #ratings = Rating.where(teacher_id: teacher.id)
+    # humor = 0
+    # cleanliness = 0
+    # punctuality = 0
+    # clarity = 0
+    # competence = 0
+    #
     #
     # ratings.map do |rating|
     #   humor += rating.humor
