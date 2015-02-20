@@ -62,7 +62,7 @@ module Controller
 # ---------------------------VIEW AVERAGE---------------------------------
   def self.view_average
     teacher_name = pick_teacher
-=begin
+
     ratings = Teacher.find_by(name: teacher_name).ratings
 
     attributes = [:humor, :cleanliness, :punctuality, :clarity, :competence]
@@ -73,16 +73,9 @@ module Controller
       sum_hash[attribute] = sum
     end
     averages_hash = Hash[sums_hash.map do |attribute, sum|
-      [attribute, sum / ratings.count]
+      [attribute, sum.to_f / ratings.count]
     end]
-=end
-    averages_hash = {
-      humor: 5.5,
-      cleanliness: 7.3,
-      punctuality: 10,
-      clarity: 1,
-      competence: 1.5,
-    }
+
     View.list_averages(averages_hash)
     puts "press enter to continue"
     gets
