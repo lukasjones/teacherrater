@@ -1,4 +1,5 @@
 require_relative "../views/app_view"
+require_relative "../../config/application"
 
 module Controller
   def self.run!
@@ -37,17 +38,14 @@ module Controller
     student_name = View.get_text_input
 
     teacher_name = pick_teacher
-
     teacher_rating_hash = View.get_ratings
-    # current_teacher = Teacher.new(teacher_rating_hash)
-    # answer = View.ask_if_they_want_to_submit(current_teacher)
 
     answer = View.ask_are_you_sure
     case answer #  is this necessary?
     when 'y'
-      # student = Student.find_or_create_by(name: student_name)
-      # teacher_to_rate = Teacher.find_by(name: teacher_name)
-      # rating = Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
+      student = Student.find_or_create_by(name: student_name)
+      teacher_to_rate = Teacher.find_by(name: teacher_name)
+      rating = Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
       View.confirm_submission
     when 'n'
       View.deconfirm_submission
