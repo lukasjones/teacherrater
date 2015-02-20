@@ -45,7 +45,7 @@ module Controller
     when 'y'
       student = Student.find_or_create_by(name: student_name)
       teacher_to_rate = Teacher.find_by(name: teacher_name)
-      rating = Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
+      Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
       View.confirm_submission
     when 'n'
       View.deconfirm_submission
@@ -62,31 +62,30 @@ module Controller
 # ---------------------------VIEW AVERAGE---------------------------------
   def self.view_average
     teacher_name = pick_teacher
+=begin
+    ratings = Teacher.find_by(name: teacher_name).ratings
 
-
-
-
-
-
-
-
-
-    #ratings = Rating.where(teacher_id: teacher.id)
-    # humor = 0
-    # cleanliness = 0
-    # punctuality = 0
-    # clarity = 0
-    # competence = 0
-    #
-    #
-    # ratings.map do |rating|
-    #   humor += rating.humor
-    #   cleanliness += rating.cleanliness
-    #   punctuality += rating.punctuality
-    #   clarity += rating.clarity
-    #   competence += rating.competence
-    # end
-    #
+    attributes = [:humor, :cleanliness, :punctuality, :clarity, :competence]
+    sums_hash = attributes.each_with_object(Hash.new) do |attribute, sum_hash|
+      sum = ratings.inject(0) do |sum, rating|
+        sum + rating[attribute]
+      end
+      sum_hash[attribute] = sum
+    end
+    averages_hash = Hash[sums_hash.map do |attribute, sum|
+      [attribute, sum / ratings.count]
+    end]
+=end
+    averages_hash = {
+      humor: 5.5,
+      cleanliness: 7.3,
+      punctuality: 10,
+      clarity: 1,
+      competence: 1.5,
+    }
+    View.list_averages(averages_hash)
+    puts "press enter to continue"
+    gets
     # give list of teachers and prompt for which teacher
     # find the average ratings of that teacher and display in a nice format
 

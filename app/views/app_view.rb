@@ -57,4 +57,17 @@ module View
   def self.deconfirm_submission
     puts "not submitted"
   end
+
+  def self.list_averages(averages_hash)
+    puts averages_hash.keys.join(" " * 4)
+    puts "------------------------------------------------------------"
+    print " " * 2 + averages_hash[:humor].to_s
+    print " " * 10 + averages_hash[:cleanliness].to_s
+    print " " * 14 + averages_hash[:punctuality].to_s
+    print " " * 12 + averages_hash[:clarity].to_s
+    puts " " * 11 + averages_hash[:competence].to_s
+    puts
+    puts
+    #puts " " * 3 + averages_hash.values.join(" " * 10)
+  end
 end
