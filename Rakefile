@@ -39,6 +39,15 @@ task "console" do
   exec "irb -r./config/application"
 end
 
+desc "rollback your migration--use STEPS=number to step back multiple times"
+task "db:rollback" do
+  number_of_steps = (ENV['STEPS'] || 1).to_i
+  ActiveRecord::Migrator.rollback('db/migrate', number_of_steps)
+
+  # Run the db:version rake task
+  Rake::Task['db:version'].invoke if Rake::Task['db:version']
+end
+
 desc "Run the specs"
 RSpec::Core::RakeTask.new(:spec)
 
