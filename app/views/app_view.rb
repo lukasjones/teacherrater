@@ -1,7 +1,7 @@
 module View
   def self.menu
     puts "What would you like to do? (choose a number)"
-    puts "1. Rate a teacher"
+    puts "1. Rate (or add) a teacher"
     puts "2. View ratings"
     puts "3. Exit"
   end
@@ -27,8 +27,25 @@ module View
     puts "Which teacher?"
   end
 
+  def self.spacing
+    puts
+    puts
+  end
+
+  def self.pause
+    puts "press enter to continue"
+    gets
+  end
+
   def self.display_teachers(teachers)
-    puts teachers.join(" | ")
+    teachers.each do |teacher|
+      puts teacher.name
+    end
+  end
+
+  def self.pad_word(number_of_spaces, word)
+    padding = number_of_spaces - word.length
+    word.to_s + ":" + " " * padding
   end
 
   def self.get_ratings
@@ -59,8 +76,9 @@ module View
   end
 
   def self.list_averages(averages_hash)
+    puts "-------------------------"
     averages_hash.each do |attribute, average|
-      puts "#{attribute}: #{average}"
+      puts "#{pad_word(11, attribute)} #{average}"
     end
     puts
   end

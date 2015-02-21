@@ -25,10 +25,11 @@ module Controller
   end
 
   def self.pick_teacher
+    View.spacing
     View.ask_teacher_name
-    teachers = ["Rock", "Mashmellow", "Sunny", "Gatherer"]
-    View.display_teachers(teachers)
-    View.get_text_input
+    View.display_teachers(Teacher.all)
+    View.spacing
+    View.get_text_input.capitalize
   end
 
 
@@ -44,13 +45,13 @@ module Controller
     case answer #  is this necessary?
     when 'y'
       student = Student.find_or_create_by(name: student_name)
-      teacher_to_rate = Teacher.find_by(name: teacher_name)
+      teacher_to_rate = Teacher.find_or_create_by(name: teacher_name)
       Rating.create(student_id: student.id, teacher_id: teacher_to_rate.id, **teacher_rating_hash)
       View.confirm_submission
     when 'n'
       View.deconfirm_submission
     end
-    sleep(2)
+    View.pause
 
     # give user funny input based off scores of teacher.
 
@@ -77,8 +78,7 @@ module Controller
     end]
 
     View.list_averages(averages_hash)
-    puts "press enter to continue"
-    gets
+    View.pause
     # give list of teachers and prompt for which teacher
     # find the average ratings of that teacher and display in a nice format
 
